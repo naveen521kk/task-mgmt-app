@@ -33,10 +33,7 @@ export function EditTask({ task }: { task: Task }) {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here.
-          </DialogDescription>
+          <DialogTitle>Edit the task</DialogTitle>
         </DialogHeader>
         <TaskForm
           defaultValues={{
