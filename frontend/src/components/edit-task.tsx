@@ -53,15 +53,19 @@ export function EditTask({ task }: { task: Task }) {
           }) => {
             try {
               setIsLoading(true);
-              await updateTask(task.id, {
+              const res = await updateTask(task.id, {
                 title,
                 description,
                 dueDate: dueDate ? format(dueDate, "yyyy-MM-dd") : undefined,
               });
+              if (res && "error" in res) {
+                throw new Error(res.error);
+              }
               toast.success("Task updated successfully");
               router.refresh();
               setIsLoading(false);
             } catch (error) {
+              setIsLoading(false);
               console.error(error);
               toast.error("Failed to update task");
             }
