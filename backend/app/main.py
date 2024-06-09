@@ -99,7 +99,6 @@ async def update_task(
     current_user: Annotated[schemas.User, Depends(auth.get_current_user)],
     db: Session = Depends(get_db),
 ):
-    print(task)
     user = crud.get_user_by_email(db, current_user.email)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
