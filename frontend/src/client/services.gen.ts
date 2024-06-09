@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { LoginForAccessTokenTokenPostData, LoginForAccessTokenTokenPostResponse, ReadUsersMeUsersMeGetResponse, ReadOwnItemsUsersMeItemsGetResponse, CreateTaskForUserUsersMeTasksPostData, CreateTaskForUserUsersMeTasksPostResponse, CreateUserUsersPostData, CreateUserUsersPostResponse, CreateTaskForUserUsersUserIdTasksPostData, CreateTaskForUserUsersUserIdTasksPostResponse } from './types.gen';
+import type { LoginForAccessTokenTokenPostData, LoginForAccessTokenTokenPostResponse, ReadUsersMeUsersMeGetResponse, ReadOwnTasksTasksGetResponse, CreateTaskForUserTasksPostData, CreateTaskForUserTasksPostResponse, ReadTaskTasksTaskIdGetData, ReadTaskTasksTaskIdGetResponse, DeleteTaskTasksTaskIdDeleteData, DeleteTaskTasksTaskIdDeleteResponse, CreateUserUsersPostData, CreateUserUsersPostResponse } from './types.gen';
 
 /**
  * Login For Access Token
@@ -33,13 +33,13 @@ export const readUsersMeUsersMeGet = (): CancelablePromise<ReadUsersMeUsersMeGet
 }); };
 
 /**
- * Read Own Items
+ * Read Own Tasks
  * @returns Task Successful Response
  * @throws ApiError
  */
-export const readOwnItemsUsersMeItemsGet = (): CancelablePromise<ReadOwnItemsUsersMeItemsGetResponse> => { return __request(OpenAPI, {
+export const readOwnTasksTasksGet = (): CancelablePromise<ReadOwnTasksTasksGetResponse> => { return __request(OpenAPI, {
     method: 'GET',
-    url: '/users/me/items/'
+    url: '/tasks/'
 }); };
 
 /**
@@ -49,11 +49,47 @@ export const readOwnItemsUsersMeItemsGet = (): CancelablePromise<ReadOwnItemsUse
  * @returns Task Successful Response
  * @throws ApiError
  */
-export const createTaskForUserUsersMeTasksPost = (data: CreateTaskForUserUsersMeTasksPostData): CancelablePromise<CreateTaskForUserUsersMeTasksPostResponse> => { return __request(OpenAPI, {
+export const createTaskForUserTasksPost = (data: CreateTaskForUserTasksPostData): CancelablePromise<CreateTaskForUserTasksPostResponse> => { return __request(OpenAPI, {
     method: 'POST',
-    url: '/users/me/tasks/',
+    url: '/tasks/',
     body: data.requestBody,
     mediaType: 'application/json',
+    errors: {
+        422: 'Validation Error'
+    }
+}); };
+
+/**
+ * Read Task
+ * @param data The data for the request.
+ * @param data.taskId
+ * @returns Task Successful Response
+ * @throws ApiError
+ */
+export const readTaskTasksTaskIdGet = (data: ReadTaskTasksTaskIdGetData): CancelablePromise<ReadTaskTasksTaskIdGetResponse> => { return __request(OpenAPI, {
+    method: 'GET',
+    url: '/tasks/{task_id}',
+    path: {
+        task_id: data.taskId
+    },
+    errors: {
+        422: 'Validation Error'
+    }
+}); };
+
+/**
+ * Delete Task
+ * @param data The data for the request.
+ * @param data.taskId
+ * @returns Task Successful Response
+ * @throws ApiError
+ */
+export const deleteTaskTasksTaskIdDelete = (data: DeleteTaskTasksTaskIdDeleteData): CancelablePromise<DeleteTaskTasksTaskIdDeleteResponse> => { return __request(OpenAPI, {
+    method: 'DELETE',
+    url: '/tasks/{task_id}',
+    path: {
+        task_id: data.taskId
+    },
     errors: {
         422: 'Validation Error'
     }
@@ -69,27 +105,6 @@ export const createTaskForUserUsersMeTasksPost = (data: CreateTaskForUserUsersMe
 export const createUserUsersPost = (data: CreateUserUsersPostData): CancelablePromise<CreateUserUsersPostResponse> => { return __request(OpenAPI, {
     method: 'POST',
     url: '/users/',
-    body: data.requestBody,
-    mediaType: 'application/json',
-    errors: {
-        422: 'Validation Error'
-    }
-}); };
-
-/**
- * Create Task For User
- * @param data The data for the request.
- * @param data.userId
- * @param data.requestBody
- * @returns Task Successful Response
- * @throws ApiError
- */
-export const createTaskForUserUsersUserIdTasksPost = (data: CreateTaskForUserUsersUserIdTasksPostData): CancelablePromise<CreateTaskForUserUsersUserIdTasksPostResponse> => { return __request(OpenAPI, {
-    method: 'POST',
-    url: '/users/{user_id}/tasks/',
-    path: {
-        user_id: data.userId
-    },
     body: data.requestBody,
     mediaType: 'application/json',
     errors: {

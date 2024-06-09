@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Package2 } from "lucide-react";
+import { ModeToggle } from "./theme-switcher";
 
 export function Header() {
   return (
@@ -19,6 +20,7 @@ export function Header() {
           >
             Task Management App
           </Link>
+          <ModeToggle />
         </nav>
       </header>
     </>

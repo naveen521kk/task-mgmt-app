@@ -5,7 +5,11 @@ import {
   loginForAccessTokenTokenPost,
   User,
   createUserUsersPost,
+  OpenAPI
 } from "@/client";
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
+
 
 export async function loginUser(
   username: string,
@@ -59,4 +63,15 @@ export async function createUser(
       };
     }
   }
+}
+
+export async function configureRequestWithAuth() {
+  OpenAPI.interceptors.request.use(async (request) => {
+    const token = cookies().get("access_token");
+    if (!token) redirect("/login");
+    if (token && request.headers) {
+      request.headers.Authorization = `Bearer ${token.value}`;
+    }
+    return request;
+  });
 }

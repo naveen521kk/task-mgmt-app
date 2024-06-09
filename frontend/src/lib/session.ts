@@ -1,8 +1,10 @@
-// store access token in local storage
+// store access token in cookies
 export function setAccessToken(token: string) {
-  localStorage.setItem("access_token", token);
+  document.cookie = `access_token=${token}; path=/`;
 }
 
 export function getAccessToken() {
-  return localStorage.getItem("access_token");
+  return document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("access_token="));
 }

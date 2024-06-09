@@ -59,26 +59,31 @@ export type LoginForAccessTokenTokenPostResponse = Token;
 
 export type ReadUsersMeUsersMeGetResponse = User;
 
-export type ReadOwnItemsUsersMeItemsGetResponse = Array<Task>;
+export type ReadOwnTasksTasksGetResponse = Array<Task>;
 
-export type CreateTaskForUserUsersMeTasksPostData = {
+export type CreateTaskForUserTasksPostData = {
     requestBody: TaskCreate;
 };
 
-export type CreateTaskForUserUsersMeTasksPostResponse = Task;
+export type CreateTaskForUserTasksPostResponse = Task;
+
+export type ReadTaskTasksTaskIdGetData = {
+    taskId: string;
+};
+
+export type ReadTaskTasksTaskIdGetResponse = Task;
+
+export type DeleteTaskTasksTaskIdDeleteData = {
+    taskId: string;
+};
+
+export type DeleteTaskTasksTaskIdDeleteResponse = Task;
 
 export type CreateUserUsersPostData = {
     requestBody: UserCreate;
 };
 
 export type CreateUserUsersPostResponse = User;
-
-export type CreateTaskForUserUsersUserIdTasksPostData = {
-    requestBody: TaskCreate;
-    userId: string;
-};
-
-export type CreateTaskForUserUsersUserIdTasksPostResponse = Task;
 
 export type $OpenApiTs = {
     '/token': {
@@ -106,7 +111,7 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/users/me/items/': {
+    '/tasks/': {
         get: {
             res: {
                 /**
@@ -115,10 +120,36 @@ export type $OpenApiTs = {
                 200: Array<Task>;
             };
         };
-    };
-    '/users/me/tasks/': {
         post: {
-            req: CreateTaskForUserUsersMeTasksPostData;
+            req: CreateTaskForUserTasksPostData;
+            res: {
+                /**
+                 * Successful Response
+                 */
+                200: Task;
+                /**
+                 * Validation Error
+                 */
+                422: HTTPValidationError;
+            };
+        };
+    };
+    '/tasks/{task_id}': {
+        get: {
+            req: ReadTaskTasksTaskIdGetData;
+            res: {
+                /**
+                 * Successful Response
+                 */
+                200: Task;
+                /**
+                 * Validation Error
+                 */
+                422: HTTPValidationError;
+            };
+        };
+        delete: {
+            req: DeleteTaskTasksTaskIdDeleteData;
             res: {
                 /**
                  * Successful Response
@@ -139,21 +170,6 @@ export type $OpenApiTs = {
                  * Successful Response
                  */
                 200: User;
-                /**
-                 * Validation Error
-                 */
-                422: HTTPValidationError;
-            };
-        };
-    };
-    '/users/{user_id}/tasks/': {
-        post: {
-            req: CreateTaskForUserUsersUserIdTasksPostData;
-            res: {
-                /**
-                 * Successful Response
-                 */
-                200: Task;
                 /**
                  * Validation Error
                  */
