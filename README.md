@@ -2,6 +2,8 @@
 
 This is a website written using Next.js and FastAPI. It is a task management app that allows users to create, update, and delete tasks. The website is hosted on Vercel and the backend is hosted on Render.
 
+Live Demo URL: https://tasks.syrusdark.cc/
+
 ## Running the website locally
 
 To run the website locally, you will need to have Node.js and Python (and poetry) installed on your computer. You will also need to have the following environment variables set or in your `.env` file (on `backend/` folder), see `.env.example` for an example of the environment variables needed:
