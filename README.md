@@ -4,7 +4,7 @@ This is a website written using Next.js and FastAPI. It is a task management app
 
 ## Running the website locally
 
-To run the website locally, you will need to have Node.js and Python (and poetry) installed on your computer. You will also need to have the following environment variables set or in your `.env` file:
+To run the website locally, you will need to have Node.js and Python (and poetry) installed on your computer. You will also need to have the following environment variables set or in your `.env` file (on `backend/` folder), see `.env.example` for an example of the environment variables needed:
 
 - `SUPABASE_POSTGRES_URL`: The URL to your postgres database on Supabase
 
