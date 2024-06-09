@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "generate-client": "openapi-ts --input http://localhost:5000/openapi.json --output ./src/client --client axios --base http://localhost:5000"
+    "generate-client": "openapi-ts --input https://task-mgmt-app.onrender.com/openapi.json --output ./src/client --client axios --base https://task-mgmt-app.onrender.com"
   },
   "dependencies": {
     "@hey-api/client-fetch": "^0.1.3",
