@@ -40,8 +40,8 @@ async def read_users_me(
     return current_user
 
 
-@app.get("/users/me/items/", response_model=list[schemas.Task])
-async def read_own_items(
+@app.get("/tasks/", response_model=list[schemas.Task])
+async def read_own_tasks(
     current_user: Annotated[schemas.User, Depends(auth.get_current_user)],
     db: Session = Depends(get_db),
 ):
@@ -50,7 +50,7 @@ async def read_own_items(
         raise HTTPException(status_code=404, detail="User not found")
     return crud.get_user_tasks(db, user.id)
 
-@app.post("/users/me/tasks/", response_model=schemas.Task)
+@app.post("/tasks/", response_model=schemas.Task)
 async def create_task_for_user(
     task: schemas.TaskCreate,
     current_user: Annotated[schemas.User, Depends(auth.get_current_user)],
@@ -61,6 +61,35 @@ async def create_task_for_user(
         raise HTTPException(status_code=404, detail="User not found")
     return crud.create_user_task(db=db, task=task, user_id=user.id)
 
+# get task by id
+@app.get("/tasks/{task_id}", response_model=schemas.Task)
+async def read_task(
+    task_id: str,
+    current_user: Annotated[schemas.User, Depends(auth.get_current_user)],
+    db: Session = Depends(get_db),
+):
+    user = crud.get_user_by_email(db, current_user.email)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    db_task = crud.get_user_task(db, user_id=user.id, task_id=task_id)
+    if not db_task:
+        raise HTTPException(status_code=404, detail="Task not found")
+    return db_task
+
+# delete task
+@app.delete("/tasks/{task_id}", response_model=schemas.Task)
+async def delete_task(
+    task_id: str,
+    current_user: Annotated[schemas.User, Depends(auth.get_current_user)],
+    db: Session = Depends(get_db),
+):
+    user = crud.get_user_by_email(db, current_user.email)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    db_task = crud.get_user_task(db, user_id=user.id, task_id=task_id)
+    if not db_task:
+        raise HTTPException(status_code=404, detail="Task not found")
+    return crud.delete_task(db, task_id=task_id)
 
 @app.post("/users/", response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
@@ -69,9 +98,3 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Email already registered")
     return crud.create_user(db=db, user=user)
 
-
-@app.post("/users/{user_id}/tasks/", response_model=schemas.Task)
-def create_task_for_user(
-    user_id: str, task: schemas.TaskCreate, db: Session = Depends(get_db)
-):
-    return crud.create_user_task(db=db, task=task, user_id=user_id)

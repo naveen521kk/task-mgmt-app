@@ -7,7 +7,7 @@ def get_user(db: Session, user_id: str):
     return db.query(models.User).filter(models.User.id == user_id).first()
 
 
-def get_user_by_email(db: Session, email: str):
+def get_user_by_email(db: Session, email: str) -> models.User:
     return db.query(models.User).filter(models.User.email == email).first()
 
 
@@ -47,6 +47,12 @@ def get_user_tasks(db: Session, user_id: str, skip: int = 0, limit: int = 10):
         .all()
     )
 
+def get_user_task(db: Session, user_id: str, task_id: str):
+    return (
+        db.query(models.Task)
+        .filter(models.Task.owner_id == user_id, models.Task.id == task_id)
+        .first()
+    )
 
 def get_task_by_id(db: Session, task_id: str):
     return db.query(models.Task).filter(models.Task.id == task_id).first()
