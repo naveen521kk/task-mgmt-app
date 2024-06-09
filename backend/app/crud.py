@@ -42,10 +42,12 @@ def get_user_tasks(db: Session, user_id: str, skip: int = 0, limit: int = 10):
     return (
         db.query(models.Task)
         .filter(models.Task.owner_id == user_id)
+        .order_by(models.Task.created_at.desc())
         .offset(skip)
         .limit(limit)
         .all()
     )
+
 
 def get_user_task(db: Session, user_id: str, task_id: str):
     return (
@@ -53,6 +55,7 @@ def get_user_task(db: Session, user_id: str, task_id: str):
         .filter(models.Task.owner_id == user_id, models.Task.id == task_id)
         .first()
     )
+
 
 def get_task_by_id(db: Session, task_id: str):
     return db.query(models.Task).filter(models.Task.id == task_id).first()

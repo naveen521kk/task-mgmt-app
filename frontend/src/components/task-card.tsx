@@ -18,6 +18,7 @@ import { Edit2, Trash2 } from "lucide-react";
 import { deleteTask } from "@/lib/api";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { EditTask } from "./edit-task";
 
 export function TaskCard({ task }: { task: Task }) {
   const router = useRouter();
@@ -27,18 +28,25 @@ export function TaskCard({ task }: { task: Task }) {
         <CardTitle>{task.title}</CardTitle>
         <CardDescription>
           Due Date:{" "}
-          <span title={new Date(task?.due_date || "").toISOString()}>
-            {new Date(task?.due_date || "").toLocaleDateString()}
-          </span>
+          {task?.due_date ? (
+            <span
+              title={
+                task?.due_date ? new Date(task?.due_date).toISOString() : ""
+              }
+            >
+              {new Date(task?.due_date || "").toLocaleDateString()}
+            </span>
+          ) : (
+            "Not specified"
+          )}
         </CardDescription>
       </CardHeader>
       <CardContent>
-        {task.description && <Label>{task.description}</Label>}
+        {/* display description with new line support */}
+        <p className="whitespace-pre-line">{task.description}</p>
       </CardContent>
       <CardFooter className="flex gap-2">
-        <Button size="icon" variant="outline">
-          <Edit2 className="h-4 w-4" />
-        </Button>
+        <EditTask task={task} />
         <Button
           size="icon"
           variant="outline"

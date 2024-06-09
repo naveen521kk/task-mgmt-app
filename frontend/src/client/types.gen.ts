@@ -29,6 +29,12 @@ export type TaskCreate = {
     due_date?: string | null;
 };
 
+export type TaskUpdate = {
+    title: string;
+    description?: string | null;
+    due_date?: string | null;
+};
+
 export type Token = {
     access_token: string;
     token_type: string;
@@ -78,6 +84,13 @@ export type DeleteTaskTasksTaskIdDeleteData = {
 };
 
 export type DeleteTaskTasksTaskIdDeleteResponse = Task;
+
+export type UpdateTaskTasksTaskIdPutData = {
+    requestBody: TaskUpdate;
+    taskId: string;
+};
+
+export type UpdateTaskTasksTaskIdPutResponse = Task;
 
 export type CreateUserUsersPostData = {
     requestBody: UserCreate;
@@ -150,6 +163,19 @@ export type $OpenApiTs = {
         };
         delete: {
             req: DeleteTaskTasksTaskIdDeleteData;
+            res: {
+                /**
+                 * Successful Response
+                 */
+                200: Task;
+                /**
+                 * Validation Error
+                 */
+                422: HTTPValidationError;
+            };
+        };
+        put: {
+            req: UpdateTaskTasksTaskIdPutData;
             res: {
                 /**
                  * Successful Response

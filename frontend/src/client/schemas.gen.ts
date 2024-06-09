@@ -157,6 +157,41 @@ export const $TaskCreate = {
     title: 'TaskCreate'
 } as const;
 
+export const $TaskUpdate = {
+    properties: {
+        title: {
+            type: 'string',
+            title: 'Title'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        },
+        due_date: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Due Date'
+        }
+    },
+    type: 'object',
+    required: ['title'],
+    title: 'TaskUpdate'
+} as const;
+
 export const $Token = {
     properties: {
         access_token: {

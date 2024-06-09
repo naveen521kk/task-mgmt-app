@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { LoginForAccessTokenTokenPostData, LoginForAccessTokenTokenPostResponse, ReadUsersMeUsersMeGetResponse, ReadOwnTasksTasksGetResponse, CreateTaskForUserTasksPostData, CreateTaskForUserTasksPostResponse, ReadTaskTasksTaskIdGetData, ReadTaskTasksTaskIdGetResponse, DeleteTaskTasksTaskIdDeleteData, DeleteTaskTasksTaskIdDeleteResponse, CreateUserUsersPostData, CreateUserUsersPostResponse } from './types.gen';
+import type { LoginForAccessTokenTokenPostData, LoginForAccessTokenTokenPostResponse, ReadUsersMeUsersMeGetResponse, ReadOwnTasksTasksGetResponse, CreateTaskForUserTasksPostData, CreateTaskForUserTasksPostResponse, ReadTaskTasksTaskIdGetData, ReadTaskTasksTaskIdGetResponse, DeleteTaskTasksTaskIdDeleteData, DeleteTaskTasksTaskIdDeleteResponse, UpdateTaskTasksTaskIdPutData, UpdateTaskTasksTaskIdPutResponse, CreateUserUsersPostData, CreateUserUsersPostResponse } from './types.gen';
 
 /**
  * Login For Access Token
@@ -90,6 +90,27 @@ export const deleteTaskTasksTaskIdDelete = (data: DeleteTaskTasksTaskIdDeleteDat
     path: {
         task_id: data.taskId
     },
+    errors: {
+        422: 'Validation Error'
+    }
+}); };
+
+/**
+ * Update Task
+ * @param data The data for the request.
+ * @param data.taskId
+ * @param data.requestBody
+ * @returns Task Successful Response
+ * @throws ApiError
+ */
+export const updateTaskTasksTaskIdPut = (data: UpdateTaskTasksTaskIdPutData): CancelablePromise<UpdateTaskTasksTaskIdPutResponse> => { return __request(OpenAPI, {
+    method: 'PUT',
+    url: '/tasks/{task_id}',
+    path: {
+        task_id: data.taskId
+    },
+    body: data.requestBody,
+    mediaType: 'application/json',
     errors: {
         422: 'Validation Error'
     }
